@@ -9,9 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.HomePage;
 import pages.SplashPage;
 
-import pages.HomePage;
-import pages.SplashPage;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class HomeTest extends BaseTest {
 
