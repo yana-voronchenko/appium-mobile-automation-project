@@ -34,7 +34,15 @@ public class BaseTest {
 
     @AfterAll
     static void tearDown() {
-        if (driver != null)
-            driver.quit();
+    if (driver != null) {
+        try {
+            driver.removeApp("com.androidsample.generalstore"); 
+             System.out.println("Додаток видалено");
+        } catch (Exception e) {
+            System.out.println("Не вдалося видалити додаток: " + e.getMessage());
+        } finally {
+            driver.quit(); 
+        }
     }
+}
 }

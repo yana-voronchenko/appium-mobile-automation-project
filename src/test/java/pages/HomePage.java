@@ -4,6 +4,8 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 
+import utils.Utils;
+
 public class HomePage {
     private AndroidDriver driver;
 
@@ -23,9 +25,9 @@ public class HomePage {
                 "new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + country + "\"))")).click();
     }
 
-    public void enterName(String name) {
-        driver.findElement(nameField).sendKeys(name);
-    }
+    // public void enterName(String name) {
+    //     driver.findElement(nameField).sendKeys(name);
+    // }
 
     public void selectGender(String gender) {
         if (gender.equalsIgnoreCase("Male"))
@@ -36,5 +38,9 @@ public class HomePage {
 
     public void clickLetsShop() {
         driver.findElement(letsShopBtn).click();
+    }
+
+    public void enterName(String name) {
+        Utils.type(nameField, name);
     }
 }
