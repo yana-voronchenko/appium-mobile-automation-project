@@ -17,7 +17,15 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-m2
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,13 +37,11 @@ jobs:
           appium driver install uiautomator2
           appium driver install xcuitest
  
-     
       - name: Verify Appium installation
         run: |
           appium --version
           appium driver list
- 
-      
+
       - name: Start Android emulator
         uses: reactivecircus/android-emulator-runner@v2
         with:
@@ -43,15 +49,11 @@ jobs:
           target: default
           arch: x86_64
           profile: pixel
-          script: mvn clean test -Dtest=HomeTest
-
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-m2
+          script: |
+            appium --base-path /wd/hub &
+            sleep 10
+            curl http://127.0.0.1:4723/wd/hub/status
+            mvn clean test
 
       - name: Build and run tests
         run: mvn clean test -Dtest=HomeTest
