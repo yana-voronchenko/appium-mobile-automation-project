@@ -41,6 +41,7 @@ jobs:
         run: |
           appium --version
           appium driver list
+          appium
 
       - name: Start Android emulator
         uses: reactivecircus/android-emulator-runner@v2
@@ -53,7 +54,6 @@ jobs:
             appium --base-path /wd/hub &
             sleep 10
             curl http://127.0.0.1:4723/wd/hub/status
-            mvn clean test
 
       - name: Build and run tests
         run: mvn clean test -Dtest=HomeTest
