@@ -1,10 +1,24 @@
 package utils;
+import java.time.Duration;
+
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 public class Utils {
-    Utilscted WebElement waitForElement(By locator) {
+   private final WebDriver driver;
+    private final WebDriverWait wait;
+
+    public Utils(WebDriver driver, Duration timeout) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, timeout);
+    }
+
+protected WebElement waitForElement(By locator) {
         try {
             return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         } catch (Exception e) {
@@ -12,7 +26,6 @@ public class Utils {
             throw e;
         }
     }
-
     // Перевірка чи елемент відображається
     public boolean isElementDisplayed(By locator) {
         try {
@@ -20,7 +33,7 @@ public class Utils {
             System.out.println("Елемент відображається: " + locator);
             return displayed;
         } catch (NoSuchElementException e) {
-            System.out.println(" Елемент не знайдено: " + locator);
+            System.out.println("Елемент не знайдено: " + locator);
             return false;
         } catch (Exception e) {
             System.out.println("Помилка при перевірці елемента: " + locator + " | Причина: " + e.getMessage());
@@ -32,15 +45,14 @@ public class Utils {
     public void click(By locator) {
         try {
             waitForElement(locator).click();
-            System.out.println(" Клік по елементу: " + locator);
+            System.out.println("Клік по елементу: " + locator);
         } catch (Exception e) {
-            System.out.println(" Помилка кліку по елементу: " + locator + " | Причина: " + e.getMessage());
+            System.out.println("Помилка кліку по елементу: " + locator + " | Причина: " + e.getMessage());
             throw e;
         }
     }
 
-    // Введення тексту
-    public static void type(By locator, String text) {
+    public void type(By locator, String text) {
         try {
             WebElement el = waitForElement(locator);
             el.clear();
@@ -52,7 +64,6 @@ public class Utils {
         }
     }
 
-    // Отримати текст
     public String getText(By locator) {
         try {
             String text = waitForElement(locator).getText();
@@ -64,4 +75,3 @@ public class Utils {
         }
     }
 }
-    
