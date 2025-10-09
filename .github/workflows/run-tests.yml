@@ -41,7 +41,11 @@ jobs:
         run: |
           appium --version
           appium driver list
-          appium
+
+      - name: Start Appium Server
+        run: |
+          appium &
+          sleep 5
 
       - name: Start Android emulator
         uses: reactivecircus/android-emulator-runner@v2
